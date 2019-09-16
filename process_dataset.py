@@ -17,13 +17,19 @@ def process_frame(file, bucket, working_dir):
         if read_line == '':
             break_the_loop = True
         else:
-            x, y, w, h = map(int, read_line.strip().split(' '))
+            # print(read_line)
+            try:
+                x, y, w, h = map(int, read_line.strip().split(' '))
+            except:
+                print('exception')
+                pass
             print('x= ' + str(x) + ' y= ' + str(y) + ' w= ' + str(w) + ' h= ' + str(h))
             roi = frame[y:h, x:w]
             file_name = file.split('.mov')[0] + str(count) + '.jpg'
             cv2.imwrite(file.split('.mov')[0] + str(count) + '.jpg', roi)
             object_name = str(working_dir) + str(file_name)
             upload_file(file_name, bucket, object_name)
+            # cv2.imwrite()
             os.remove(file_name)
             count += 1
         if cv2.waitKey(1) & 0xFF == ord('q') or break_the_loop:
