@@ -6,7 +6,10 @@ from upload_data import upload_file
 
 def process_frame(file, bucket, working_dir):
     cap = cv2.VideoCapture(file)
-    f = open(file.split('.mov')[0] + '.face')
+    try:
+        f = open(file.split('.mov')[0] + '.face')
+    except:
+        f = open(file.split('.mov')[0].split('.m')[0] + '.face')
     break_the_loop = False
     count = 0
     while True:
