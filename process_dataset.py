@@ -37,7 +37,7 @@ def process_frame(file):
                 if not os.path.exists('SIWFaces/'+path):
                     os.mkdir('SIWFaces/'+str(path))
             print('path '+ path)
-            cv2.imwrite(file.split('.mov')[0] + str(count) + '.jpg', roi)
+            # cv2.imwrite(file.split('.mov')[0] + str(count) + '.jpg', roi)
             # object_name = str(working_dir) + str(file_name)
             # upload_file(file_name, bucket, object_name)
             cv2.imwrite('SIWFaces/'+file_name, roi)
