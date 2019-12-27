@@ -1,18 +1,10 @@
 import os
 
-print('creating training dataset')
-for root, dirs, filenames in os.walk('/home/ec2-user/dataset/SiW_release/Train'):
+for root, dirs , filenames in os.walk('LibriSpeech'):
+
     for file in filenames:
-        if file.endswith('.mov'):
-            path = os.path.join(root, file)
-            print(file + ' ' + str(path.split('/')[-3]))
-            with open('train.csv', 'a') as fwriter:
-                fwriter.write(file + ' ' + str(path.split('/')[-3]) + '\n')
-print('creating test dataset ')
-for root, dirs, filenames in os.walk('/home/ec2-user/dataset/SiW_release/Test'):
-    for file in filenames:
-        if file.endswith('.mov'):
-            path = os.path.join(root, file)
-            print(file + ' ' + str(path.split('/')[-3]))
-            with open('test.csv', 'a') as fwriter:
-                fwriter.write(file + ' ' + str(path.split('/')[-3]) + '\n')
+        if file.endswith('.flac'):
+            file_path = os.path.join(root, file)
+            file_name = file_path.split('.flac')[0]
+            save_file_name = file_name +'.m4a'
+            os.system('ffmpeg -i {0} {1}'. format(file_path, save_file_name))
