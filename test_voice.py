@@ -3,7 +3,7 @@ import os
 from upload_data import upload_file
 import requests
 
-DIR = '/home/ubuntu/librispeech/test-clean'
+DIR = '/home/ubuntu/librispeech/LibriSpeech/test-clean'
 enroll_url = 'http://ab6040ee8989c11e98cff0a75697d87c-1513868072.us-east-1.elb.amazonaws.com/v1.0/voice/enroll_voice/'
 verify_url = 'http://ab6040ee8989c11e98cff0a75697d87c-1513868072.us-east-1.elb.amazonaws.com/v1.0/voice/verify_voice/'
 
