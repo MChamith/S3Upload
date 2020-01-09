@@ -27,8 +27,9 @@ def enroll():
                     speakerid = path.split('/')[-3]
                     # print(speakerid)
                     upload_file(path, 'ustlkcomdev-test-biometric',
-                                'meetsid/' + str(speakerid) + '_3/voice/voice.m4a')
-                    data = {"file_path": 'meetsid/' + str(speakerid) + '_3/voice/voice.m4a', "wallet_id": str(speakerid)+'_3'}
+                                'meetsid/' + str(speakerid) + '_4/voice/voice.m4a')
+                    data = {"file_path": 'meetsid/' + str(speakerid) + '_4/voice/voice.m4a',
+                            "wallet_id": str(speakerid) + '_4'}
                     response = requests.post(enroll_url,
                                              headers={'content-type': 'application/json'},
                                              data=json.dumps(data))
@@ -36,8 +37,10 @@ def enroll():
                     status = json_data.get('enroll')
                     print(status)
                     if status == 'failed':
-                        break_at +=1
+                        break_at += 1
                         print('enroll failed incrementing by one')
+                    with open('enrollresult.csv', 'w') as fw:
+                        fw.write(str(path) + ',' + str(status))
 
 
 def verify():
@@ -64,7 +67,8 @@ def verify():
                         for spkr in speakerids:
                             with open('testclean.csv', 'a') as writer:
                                 writer.write(
-                                    str(spkr) + ',' + 'meetsid/' + path.split('/')[1] + '/verify/' + path.split('/')[3] + '\n')
+                                    str(spkr) + ',' + 'meetsid/' + path.split('/')[1] + '/verify/' + path.split('/')[
+                                        3] + '\n')
                         #     data = {"file_path": 'meetsid/' + str(speakerid) + '/verify/' + str(file),
                         #             "wallet_id": str(spkr)}
                         #     response = requests.post(verify_url,
