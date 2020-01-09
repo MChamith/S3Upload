@@ -26,8 +26,8 @@ def enroll():
                     speakerid = path.split('/')[-3]
                     # print(speakerid)
                     upload_file(path, 'ustlkcomdev-test-biometric',
-                                'meetsid/' + str(speakerid) + '_1/voice/voice.m4a')
-                    data = {"file_path": 'meetsid/' + str(speakerid) + '_1/voice/voice.m4a', "wallet_id": str(speakerid)+'_1'}
+                                'meetsid/' + str(speakerid) + '_2/voice/voice.m4a')
+                    data = {"file_path": 'meetsid/' + str(speakerid) + '_2/voice/voice.m4a', "wallet_id": str(speakerid)+'_2'}
                     response = requests.post(enroll_url,
                                              headers={'content-type': 'application/json'},
                                              data=json.dumps(data))
