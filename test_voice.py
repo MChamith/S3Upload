@@ -17,8 +17,9 @@ def enroll():
         # print(sub_parent_dirs)
         for root, dirs, filenames in os.walk(sub_parent_dirs[0]):
             count = 0
+            break_at = 3
             for file in filenames:
-                if count == 3:
+                if count == break_at:
                     break
                 if file.endswith('.m4a'):
                     path = os.path.join(root, file)
@@ -26,12 +27,17 @@ def enroll():
                     speakerid = path.split('/')[-3]
                     # print(speakerid)
                     upload_file(path, 'ustlkcomdev-test-biometric',
-                                'meetsid/' + str(speakerid) + '_2/voice/voice.m4a')
-                    data = {"file_path": 'meetsid/' + str(speakerid) + '_2/voice/voice.m4a', "wallet_id": str(speakerid)+'_2'}
+                                'meetsid/' + str(speakerid) + '_3/voice/voice.m4a')
+                    data = {"file_path": 'meetsid/' + str(speakerid) + '_3/voice/voice.m4a', "wallet_id": str(speakerid)+'_3'}
                     response = requests.post(enroll_url,
                                              headers={'content-type': 'application/json'},
                                              data=json.dumps(data))
-                    print(response.text)
+                    json_data = json.loads(response.text)
+                    status = json_data.get('enroll')
+                    print(status)
+                    if status == 'failed':
+                        break_at +=1
+                        print('enroll failed incrementing by one')
 
 
 def verify():
