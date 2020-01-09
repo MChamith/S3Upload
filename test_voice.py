@@ -27,9 +27,9 @@ def enroll():
                     speakerid = path.split('/')[-3]
                     # print(speakerid)
                     upload_file(path, 'ustlkcomdev-test-biometric',
-                                'meetsid/' + str(speakerid) + '_4/voice/voice.m4a')
-                    data = {"file_path": 'meetsid/' + str(speakerid) + '_4/voice/voice.m4a',
-                            "wallet_id": str(speakerid) + '_4'}
+                                'meetsid/' + str(speakerid) + '_5/voice/voice.m4a')
+                    data = {"file_path": 'meetsid/' + str(speakerid) + '_5/voice/voice.m4a',
+                            "wallet_id": str(speakerid) + '_5'}
                     response = requests.post(enroll_url,
                                              headers={'content-type': 'application/json'},
                                              data=json.dumps(data))
@@ -39,8 +39,8 @@ def enroll():
                     if status == 'failed':
                         break_at += 1
                         print('enroll failed incrementing by one')
-                    with open('enrollresult.csv', 'w') as fw:
-                        fw.write(str(path) + ',' + str(status))
+                    with open('enrollresult.csv', 'a') as fw:
+                        fw.write(str(path) + ',' + str(status)+'\n')
 
 
 def verify():
