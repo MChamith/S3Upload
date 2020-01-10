@@ -23,13 +23,12 @@ def enroll():
                     break
                 if file.endswith('.m4a'):
                     path = os.path.join(root, file)
-                    count += 1
                     speakerid = path.split('/')[-3]
                     # print(speakerid)
                     upload_file(path, 'ustlkcomdev-test-biometric',
-                                'meetsid/' + str(speakerid) + '_5/voice/voice.m4a')
-                    data = {"file_path": 'meetsid/' + str(speakerid) + '_5/voice/voice.m4a',
-                            "wallet_id": str(speakerid) + '_5'}
+                                'meetsid/' + str(speakerid) + '_6/voice/voice.m4a')
+                    data = {"file_path": 'meetsid/' + str(speakerid) + '_6/voice/voice.m4a',
+                            "wallet_id": str(speakerid) + '_6'}
                     response = requests.post(enroll_url,
                                              headers={'content-type': 'application/json'},
                                              data=json.dumps(data))
@@ -41,6 +40,7 @@ def enroll():
                         print('enroll failed incrementing by one')
                     with open('enrollresult.csv', 'a') as fw:
                         fw.write(str(path) + ',' + str(status)+'\n')
+                    count += 1
 
 
 def verify():
