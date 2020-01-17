@@ -3,7 +3,7 @@ import os
 from upload_data import upload_file
 import requests
 
-DIR = '/home/ubuntu/librispeech/LibriSpeech/test-clean'
+DIR = '/home/ubuntu/librispeech/LibriSpeech/test-other'
 enroll_url = 'http://ab6040ee8989c11e98cff0a75697d87c-1513868072.us-east-1.elb.amazonaws.com/v1.0/voice/enroll_voice/'
 verify_url = 'http://ab6040ee8989c11e98cff0a75697d87c-1513868072.us-east-1.elb.amazonaws.com/v1.0/voice/verify_voice/'
 
@@ -26,19 +26,19 @@ def enroll():
                     speakerid = path.split('/')[-3]
                     # print(speakerid)
                     upload_file(path, 'ustlkcomdev-test-biometric',
-                                'meetsid/' + str(speakerid) + '_6/voice/voice.m4a')
-                    data = {"file_path": 'meetsid/' + str(speakerid) + '_6/voice/voice.m4a',
-                            "wallet_id": str(speakerid) + '_6'}
+                                'meetsid/' + str(speakerid) + '/voice/voice.m4a')
+                    data = {"file_path": 'meetsid/' + str(speakerid) + '/voice/voice.m4a',
+                            "wallet_id": str(speakerid)}
                     response = requests.post(enroll_url,
                                              headers={'content-type': 'application/json'},
                                              data=json.dumps(data))
                     json_data = json.loads(response.text)
                     status = json_data.get('enroll')
                     print(status)
-                    if status == 'failed':
+                    if status == 'failed' or status == 'error':
                         break_at += 1
                         print('enroll failed incrementing by one')
-                    with open('enrollresult.csv', 'a') as fw:
+                    with open('enrollresultother.csv', 'a') as fw:
                         fw.write(str(path) + ',' + str(status)+'\n')
                     count += 1
 
@@ -57,24 +57,23 @@ def verify():
                     # print(file)
                     if file.endswith('.m4a'):
                         path = os.path.join(root, file)
-                        path = path.split('test-clean')[-1]
+                        # path = path.split('test-clean')[-1]
                         # path = '/' + path.split('/')[1] + '/' + path.split('/')[3]
-                        # speakerid = path.split('/')[-3]
-                        print(path)
+                        speakerid = path.split('/')[-3]
+                        print(speakerid)
 
-                        # upload_file(path, 'ustlkcomdev-test-biometric',
-                        #             'meetsid/' + str(speakerid) + '/verify/' + str(file))
+                        upload_file(path, 'ustlkcomdev-test-biometric',
+                                    'meetsid/' + str(speakerid) + '_6/verify/' + str(file))
                         for spkr in speakerids:
                             with open('testclean.csv', 'a') as writer:
                                 writer.write(
-                                    str(spkr) + ',' + 'meetsid/' + path.split('/')[1] + '/verify/' + path.split('/')[
-                                        3] + '\n')
-                        #     data = {"file_path": 'meetsid/' + str(speakerid) + '/verify/' + str(file),
-                        #             "wallet_id": str(spkr)}
-                        #     response = requests.post(verify_url,
-                        #                              headers={'content-type': 'application/json'},
-                        #                              data=json.dumps(data))
-                        #     result = response.json()
+                                    str(spkr)+'_6' + ',' + 'meetsid/' + str(speakerid) + '_6/verify/' + path.split('test-clean')[-1].split('/')[-1] + '\n')
+                            # data = {"file_path": 'meetsid/' + str(speakerid) + '/verify/' + str(file),
+                            #         "wallet_id": str(spkr)}
+                            # response = requests.post(verify_url,
+                            #                          headers={'content-type': 'application/json'},
+                            #                          data=json.dumps(data))
+                            # result = response.json()
                         #     with open('libri_test_clean.csv', 'a') as writer:
                         #         writer.write(
                         #             str(speakerid) + ',' + str(spkr) + ',' + result['matching'] + ',' + str(
