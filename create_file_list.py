@@ -1,6 +1,6 @@
 import os
 
-for root, dirs , filenames in os.walk('/home/ubuntu/librispeech'):
+for root, dirs , filenames in os.walk('/home/ubuntu/librispeech/LibriSpeech/test-other'):
 
     for file in filenames:
         if file.endswith('.flac'):
